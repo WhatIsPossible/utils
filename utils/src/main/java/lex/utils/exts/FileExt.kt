@@ -40,3 +40,18 @@ val File?.formatSize: String
         }
     }
 
+fun File.deleteFile() {
+    if (exists()) {
+        if (isDirectory) {
+            val childFile = listFiles()
+            if (childFile != null && childFile.isNotEmpty()) {
+                for (f in childFile) {
+                    f.deleteFile()
+                }
+            }
+        }
+        if (!delete()) {
+            deleteOnExit()
+        }
+    }
+}
