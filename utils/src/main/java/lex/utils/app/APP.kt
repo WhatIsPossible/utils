@@ -5,13 +5,14 @@ import android.content.Context
 
 object APP {
 
-    private lateinit var app: Application
+    lateinit var application: Application
+        private set
 
     val context: Context
-        get() = app.applicationContext
+        get() = application.applicationContext
 
     fun init(app: Application) {
-        this.app = APP.app
+        this.application = app
     }
 
 }
