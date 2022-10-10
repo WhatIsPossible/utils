@@ -42,7 +42,7 @@ class ThreadPool private constructor() {
         ThreadPoolExecutor.DiscardOldestPolicy()
     )
 
-    private fun execute(runnable: Runnable) {
+    fun execute(runnable: Runnable) {
         executor.execute(runnable)
     }
 
@@ -52,7 +52,7 @@ class ThreadPool private constructor() {
      * @param task
      * @return 根据返回值可以判断任务是否结束
      */
-    fun submit(task: Runnable?): Future<*>? {
+    fun submit(task: Runnable): Future<*> {
         return executor.submit(task)
     }
 
@@ -98,7 +98,6 @@ class ThreadPool private constructor() {
          * 阻塞队列最大数量
          */
         private const val BLOCK_DEQUE_MAX_SIZE = 50
-
 
         @Volatile
         private var instance: ThreadPool? = null
