@@ -19,3 +19,6 @@ fun SpannableStringBuilder.appendText(
     }
     return this
 }
+
+inline val String?.isNotEmpty: Boolean
+    get() = this != null && this.isNotEmpty()
