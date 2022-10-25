@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".MyApplication"
-        android:theme="@style/Theme.Utils"
         tools:targetApi="31" />
 
 </manifest>
