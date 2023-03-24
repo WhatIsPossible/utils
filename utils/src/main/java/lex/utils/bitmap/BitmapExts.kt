@@ -1,4 +1,4 @@
-package lex.utils.exts
+package lex.utils.bitmap
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -9,8 +9,8 @@ import android.view.PixelCopy
 import android.view.View
 import android.view.Window
 import androidx.annotation.RequiresApi
+import lex.utils.exts.checkOrCreate
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 
 /**
@@ -20,21 +20,11 @@ import java.io.IOException
  * @return 保存成功后返回路径. 失败返回null.
  */
 fun Bitmap.saveToFile(file: File): String? {
+    if (!file.checkOrCreate()) return null
     try {
-        if (!file.exists()) {
-            file.parentFile?.run {
-                if (!exists()) {
-                    mkdirs()//创建父级目录
-                }
-            }
-            if (!file.exists()) {
-                file.createNewFile()//创建文件
-            }
-        }
-
-        FileOutputStream(file).use {
-            compress(Bitmap.CompressFormat.PNG, 100, it)
-            it.flush()
+        file.outputStream().use { outputStream ->
+            compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            outputStream.flush()
         }
         return file.absolutePath
     } catch (e: SecurityException) {
