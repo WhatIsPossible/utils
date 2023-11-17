@@ -1,8 +1,8 @@
 package lex.utils.exts
 
-import android.content.ContentProvider
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * 获取文件大小.
@@ -84,6 +84,17 @@ fun File.checkOrCreate(): Boolean {
     return false
 }
 
-fun ContentProvider.insertMediaImage(){
+@Throws(IOException::class)
+fun InputStream.saveToFile(file: File, bufferSize: Int = DEFAULT_BUFFER_SIZE) {
+    file.checkOrCreate()
+    use { input ->
+        file.outputStream().buffered(bufferSize).use {
+            input.copyTo(it, bufferSize)
+        }
+    }
+}
 
+@Throws(IOException::class)
+fun readBytes(file: File): ByteArray {
+    return file.readBytes()
 }
